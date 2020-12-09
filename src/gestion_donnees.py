@@ -7,7 +7,6 @@ from sklearn.model_selection import StratifiedShuffleSplit
 """
 
 Changer self.train_add & self.test_add avec le chemin brut
-test
 
 """
 
