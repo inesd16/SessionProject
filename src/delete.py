@@ -23,15 +23,6 @@ warnings.warn = warn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
 
-if __name__ == "__main__":
-    x = [5,6,7,8]
-    y = [1,3,5,2]
-    print("test")
-    plt.figure(figsize=(30,30))
-    plt.scatter(1,2)
-
-    plt.title('Nuage de points avec Matplotlib')
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.savefig('ScatterPlot_05.png')
-    plt.show()
+a=23
+print(int(a/4)) #5
+print(a%4) #3

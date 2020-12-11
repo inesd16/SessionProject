@@ -41,7 +41,7 @@ class Perceptr:
         return clf
 
     #Prédiction d'une donnée
-    def prediction(self, x, y):
+    def prediction(self, x):
         #Insertion du biais
         x = np.insert(x, 0, 1)
         #Prédiction
@@ -50,12 +50,16 @@ class Perceptr:
         return result
 
     #Prédiction d'un ensemble de données
-    def predict_all(self, X_test, y_test):
-
-        y_pred = np.array([self.prediction(x,y) for x,y in zip(X_test, y_test)]) #stocke les prédictions dans un tableau
-        y_true = np.array([y for y in y_test]) #stocke les étiquettes dans un tableau
-        accuracy_pred = accuracy_score(y_pred, y_true)
-        return accuracy_pred
+    def predict_all(self, X_test, y_test = []):
+        y_pred = np.array([self.prediction(x) for x in X_test]) #stocke les prédictions dans un tableau
+        #Test fait avec des données de test (sans cible)
+        if (y_test == []):
+            return y_pred
+        #Test fait avec des données de validation (cibles connues)
+        else:
+            y_true = np.array([y for y in y_test]) #stocke les étiquettes dans un tableau
+            accuracy_pred = accuracy_score(y_pred, y_true)
+            return accuracy_pred
 
     def rechercheHypParm(self, X_train, y_train, X_test, y_test):
         #Récupération des divers paramètres
@@ -76,7 +80,7 @@ class Perceptr:
                 j+=1
             i+=1
         print("Résultat des accuracy en fonction des différents paramètres lambda & learning rate :\n",historique)
-        # On choisit les HP qui donne une précision maximale
+        # On choisit les HP qui donnent une précision maximale
         h = argmax(historique.reshape(len(lambdas)*len(learn_rates)))
         lambdindex=int(h/len(lambdas)) # Lamb correspondant à une précision max
         learnindex=h%(len(learn_rates)) # LR correspondant à une précision max
@@ -110,7 +114,7 @@ class Perceptr:
 
     #Affichage de la précision (taille des points) en fonction des hyperparamètres
     def affichage(self, historique, param = []):
-        print("Les donnees sont affichees dans la figure.\nLe points rose determine la meilleure accuracy\n\n")
+        print("Les donnees sont affichees dans la figure.\nLe point rose determine la meilleure accuracy\n\n")
         for x in self.lamb: # affichage de toutes les combinaisons lamb - learnRate
             indexLamb = int(np.where(np.isclose(self.lamb,x))[0][0])
             tab = np.full(len(self.learnRate),x)
@@ -135,6 +139,10 @@ def main():
     classifieur = perceptron.rechercheHypParm(X_train,y_train, X_test, y_test)
     #validation avec les HP trouvés précédemment
     perceptron.cross_validation(train, labels, classifieur)
+
+    #test
+    print("\n\nVoici les cibles prédites sur nos 594 données de test")
+    print(perceptron.predict_all(test))
 
 if __name__ == "__main__":
     main()

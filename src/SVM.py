@@ -31,6 +31,10 @@ from sklearn.model_selection import StratifiedShuffleSplit
 python KNN.py 1 0
 """
 
+#Ce code a été pris sur le Kaggle, https://www.kaggle.com/udaysa/svm-with-scikit-learn-svm-with-parameter-tuning
+#
+# puis modifié pour adaptation à notre problème
+
 class SVM : 
     def __init__(self):
       self.a = 0
