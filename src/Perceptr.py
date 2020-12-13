@@ -3,8 +3,6 @@
 import gestion_donnees as gd
 from numpy import *
 import numpy as np
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.linear_model import Perceptron
 from random import randint
@@ -25,7 +23,8 @@ from sklearn.metrics import accuracy_score
 class Perceptr:
 
     def __init__(self):
-        #Plage de valeurs
+
+        #Plage de valeurs pour les paramètres
         self.lamb = np.logspace(-5,0,9)
         self.learnRate = np.logspace(-5,0,9)
 
@@ -120,7 +119,7 @@ class Perceptr:
             tab = np.full(len(self.learnRate),x)
             plt.scatter(tab,self.learnRate,s=historique[indexLamb,:]*500, c ="black")
             
-        plt.scatter(param[0],param[1], c = "pink")
+        plt.scatter(param[0],param[1], c = "pink", label = 'Meilleure accuracy')
         plt.xscale('log')
         plt.yscale('log')
         plt.title('Précision en fonction des paramètres')

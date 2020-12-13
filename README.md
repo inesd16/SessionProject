@@ -1,7 +1,18 @@
-## codemix-vanilla-python
 
-Template for project creation of Python inside CodeMix
 
-# Contents
 
-This template project is an example that prints on the console the Hello World!!! Greeting with the Python langage.
+
+##  Installation 
+
+```pip install numpy scikit-learn matplotlib```
+
+
+##  Run 
+
+Lancer l'exécution d'un fichier selon ce qui est précisé dans l'en tête de celui-ci'
+
+Par exemple: 
+
+```
+python KNN.py 1 0
+```

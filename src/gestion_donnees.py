@@ -4,11 +4,6 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
 
-"""
-
-Changer self.train_add & self.test_add avec le chemin brut
-
-"""
 
 class GestionDonnees:
     def __init__(self):
@@ -16,8 +11,8 @@ class GestionDonnees:
         self.nb_test = 0
         self.nb_split = 1
         self.test_size = 0.2
-        self.train_add = r'C:\Users\inesd\source\repos\SessionProject\leaf-classification\train.csv'
-        self.test_add = r'C:\Users\inesd\source\repos\SessionProject\leaf-classification\test.csv'
+        self.train_add = '../leaf-classification/train.csv'
+        self.test_add = '../leaf-classification/test.csv'
 
 
     def recupDonnees(self):

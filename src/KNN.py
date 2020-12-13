@@ -21,7 +21,7 @@ from sklearn.model_selection import StratifiedShuffleSplit
 ################################
 # Execution en tant que script 
 #
-# tapper python KNN.py 1 0
+# taper python KNN.py 1 0
 #
 # dans un terminal
 ################################
@@ -73,8 +73,6 @@ class KNN :
     def predictByFeaturesKN(self, X_train, y_train, X_test, k, y_test = []):
 
         predictionsTot = np.zeros(len(X_test))
-        print("Méthode des k plus proches voisins appartenant à la même classe")
-        print("La classe prédite est celle qui correspond à la classe qu'on retrouve k fois, parmi les plus proches voisins")
         distances = np.zeros(X_train.shape[0])
 
         #Comparaison des distances entre les donnees de test et d'entrainement
@@ -111,10 +109,11 @@ class KNN :
                 if result==y_test[i]:
                     score+=1
                 i+=1
-        #Précision totale
-        scoreTot = score/i*100
+            #Précision totale
+            scoreTot = score/i*100
         print("Réussite: {}%\n".format(score/i*100))
-                
+    
+    
         return predictionsTot, scoreTot
 
     #Affichage des groupes de points
@@ -143,7 +142,7 @@ class KNN :
             i = i+1
         i=0
 
-        #Ajout des donnees testees et ciblees sous forme de marker _
+        #Ajout des donnees testees et ciblees sous forme de marqueur _
         for t in test:
             points[i+len(X_train)] = self.moyenneFeatures(t)
             c = colors[int(predictionTest[i])]      #différente couleur pour chaque etiquette de classe
@@ -153,40 +152,6 @@ class KNN :
         plt.title('Margin Shape Texture')
         plt.show()
         
-        #points = np.zeros((self.nb_train+self.test,3))
-        #i=0
-        #plt.figure(figsize=(30,30))
-        #for x in X_train:
-        #    points[i] = self.moyenneFeatures(x)
-        #    c = colors[y_train[i]]
-        #    plt.scatter(points[i, 1], points[i, 2], c=c)
-        #    i = i+1
-        #i=0
-        #for t in test:
-        #    points[i+len(X_train)] = self.moyenneFeatures(t)
-        #    c = colors[int(predictionTest[i])]      #différente couleur pour chaque etiquette de classe
-        #    plt.scatter(points[i, 1], points[i, 2], c=c, marker = '_')
-        #    i = i+1
-        #plt.title('Shape Texture')
-        #plt.show()
-        
-        #plt.figure(figsize=(30,30))
-        #points = np.zeros((self.nb_train+self.test,3))
-        #i=0
-        #for x in X_train:
-        #    points[i] = self.moyenneFeatures(x)
-        #    c = colors[y_train[i]]
-        #    plt.scatter(points[i, 2], points[i, 0], c=c)
-        #    i = i+1
-        #i=0
-        #for t in test:
-        #    points[i+len(X_train)] = self.moyenneFeatures(t)
-        #    c = colors[int(predictionTest[i])]      #différente couleur pour chaque etiquette de classe
-        #    plt.scatter(points[i, 2], points[i, 0], c=c, marker = '_')
-        #    i = i+1
-        #plt.title('Texture Margin')
-        #plt.show()
-
 
     #Calcul des moyennes de features pour une donnee
     def moyenneFeatures(self, x):
@@ -215,13 +180,17 @@ class KNN :
 
     #Prédiction d'un ensemble pour tous les k
     def prediction_all_k(self, X_train, y_train, X_test, y_test):
+        
+
         print(" -- Prédiction pour tous les k ---")
+        print("Méthode des k plus proches voisins appartenant à la même classe")
+        print("La classe prédite est celle qui correspond à la classe qu'on retrouve k fois, parmi les plus proches voisins")
         result = np.zeros(8)
         for k in range(1,9):
             print("Prédiction pour k = ",k)
             _,result[k-1] = self.predictByFeaturesKN(X_train, y_train, X_test, k, y_test)
         plt.scatter(range(1,9),result)
-        plt.title('Margin Shape Texture')
+        plt.title('Précision en fonction du nombre de plus proches voisins désirés')
         plt.xlabel("Nombre de plus proches voisins")
         plt.ylabel("Précision")
         plt.show()
@@ -259,10 +228,12 @@ def main():
     
     #Donnees de test, sans cible
     if sys.argv[2] == 1:
+        print("-- Prédicitions des données de test avec affichage --")
         knn.affichage(train, labels, test, k)
 
     #Donnees de validation
     else:
+        print("-- Prédicitions des données de validation avec affichage --")
         knn.affichage(X_train, y_train, X_test, k, y_test)
 
 

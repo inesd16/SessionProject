@@ -1,8 +1,6 @@
 from sklearn.svm import SVC
 from numpy import *
 import numpy as np
-import pandas as pd
-import seaborn as sns
 from sklearn.metrics import accuracy_score, confusion_matrix
 from sklearn.preprocessing import StandardScaler
 
@@ -24,11 +22,10 @@ from sklearn.model_selection import StratifiedShuffleSplit
 ################################
 # Execution en tant que script 
 #
-# tapper python SVM.py
+# taper python SVM.py
 #
 # dans un terminal
 ################################
-python KNN.py 1 0
 """
 
 #Ce code a été pris sur le Kaggle, https://www.kaggle.com/udaysa/svm-with-scikit-learn-svm-with-parameter-tuning
@@ -63,7 +60,7 @@ class SVM :
             print()
             print(clf.best_params_)
             print()
-            print("Grille des score en fonction des HP :")
+            print("Grille des scores en fonction des HP :")
             print()
             means = clf.cv_results_['mean_test_score']
             stds = clf.cv_results_['std_test_score']

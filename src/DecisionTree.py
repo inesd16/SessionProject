@@ -1,26 +1,33 @@
 from numpy import *
 import numpy as np
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn import datasets 
-from sklearn.metrics import confusion_matrix,accuracy_score
+from sklearn.metrics import accuracy_score
 from random import randint
 import gestion_donnees as gd
-from sklearn.tree import DecisionTreeClassifier,DecisionTreeRegressor
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import StratifiedShuffleSplit, cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import cross_val_score
 
 
+"""  
+
+################################
+# Execution en tant que script 
+#
+# taper python DecisionTree.py
+#
+# dans un terminal
+################################
+"""
 class DecisionTree:
     
     def __init__(self):
-        """
-        Algorithmes des K plus proches voisins, classification lineaire"""
+        """        Algorithme d'un arbre de décisions       """
 
         #Paramètres du classifieur
         self.criterions = ['gini', 'entropy']
         self.splitters = ['random','best']
+
         #Exécution des prédictions sur une place de max_depth (allant de depth_begin à depth_size)
         self.depth_begin = 1
         self.depth_size = 20
@@ -49,6 +56,7 @@ class DecisionTree:
                         y_test):
 
         #Pour toutes les caractéristiques (paramètres)
+
         historique = np.zeros((2,2))
         #Tableau contenant les accuracy de chaque depth et les paramètres criterion et splitter correspondants
         bestParamDepth = np.zeros((self.depth_size-self.depth_begin,3))
@@ -83,16 +91,19 @@ class DecisionTree:
 
         #Selection des paramètres ayant la meilleure précision parmi tous les depth
         acc_index = argmax(bestParamDepth[:,0]) #indice du meilleur accuracy
+
         #Triplet correspondant à la meilleur accuracy (acc, crit, splitter)
         bestParamDepth2 = bestParamDepth[acc_index]
+
         #Transformation des index en string (pour criterion et splitter)
         c,s = self.selectionParam(bestParamDepth2[1], bestParamDepth2[2])
         print("La meilleure précision ", bestParamDepth[acc_index, 0], 
-              "est trouvée avec une depth = ",acc_index+self.depth_begin, 
+              "est trouvée avec une profondeur = ",acc_index+self.depth_begin, 
               ",\nune criterion = ",c,
               ",\net un splitter = ",s)
         #On retourne le classifieur avec les meilleurs parametres
-        clf = DecisionTreeClassifier(max_depth = acc_index+self.depth_begin, splitter = s,criterion=c)
+        clf = DecisionTreeClassifier(max_depth = acc_index + self.depth_begin, 
+                                     splitter = s,criterion=c)
         
         return clf, historiqueTot
 
@@ -111,6 +122,7 @@ class DecisionTree:
     #Affichage des précisions en fonction des différents paramètres
     def affichageParam(self,historiqueTot):
         #Définir une couleur pour chaque jeu de paramètres
+        print("\nAffichage des paramètres ")
         color = ["cyan", "black", "magenta", "lightgreen"]
         a=0
         for p in historiqueTot:
@@ -157,6 +169,6 @@ def main():
     clf.fit(X_train,y_train)
     pred = tree.prediction(test, clf)
     print("Prédictions faites sur les données de test : ",pred)
-        
+
 if __name__ == "__main__":
     main()
