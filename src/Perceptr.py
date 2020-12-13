@@ -1,5 +1,19 @@
 # -*- coding: utf-8 -*-
 
+"""
+###############################
+# Execution en tant que script 
+#
+# taper python Perceptr.py
+#
+# dans un terminal
+################################
+
+Chaimae Fillah
+Ines Dobosz
+
+"""
+
 import gestion_donnees as gd
 from numpy import *
 import numpy as np
@@ -10,14 +24,6 @@ from sklearn.model_selection import StratifiedShuffleSplit
 import sys
 from sklearn.metrics import accuracy_score
 
-
-################################
-# Execution en tant que script 
-#
-# taper python Perceptr.py
-#
-# dans un terminal
-################################
 
 
 class Perceptr:
@@ -76,8 +82,8 @@ class Perceptr:
                 perc = self.entrainement(X_train, y_train, perc)
                 #test
                 historique[i][j] = self.predict_all(X_test, y_test) #affiche la précision pour chaque hyperparamètre
-                j+=1
-            i+=1
+                j += 1
+            i += 1
         print("Résultat des accuracy en fonction des différents paramètres lambda & learning rate :\n",historique)
         # On choisit les HP qui donnent une précision maximale
         h = argmax(historique.reshape(len(lambdas)*len(learn_rates)))
@@ -99,7 +105,7 @@ class Perceptr:
         meanScoreCV = 0
         for train_index, test_index in sss.split(train, labels): #pour chaque sous partie, on divise avec sss
             print("Itération ",i)
-            i+=1
+            i += 1
             X_train, X_test = train.values[train_index], train.values[test_index]
             y_train, y_test = labels[train_index], labels[test_index]
             #Entrainement + prediction pour chaque partie
@@ -119,7 +125,7 @@ class Perceptr:
             tab = np.full(len(self.learnRate),x)
             plt.scatter(tab,self.learnRate,s=historique[indexLamb,:]*500, c ="black")
             
-        plt.scatter(param[0],param[1], c = "pink", label = 'Meilleure accuracy')
+        plt.scatter(param[0],param[1], c="pink", label='Meilleure accuracy')
         plt.xscale('log')
         plt.yscale('log')
         plt.title('Précision en fonction des paramètres')

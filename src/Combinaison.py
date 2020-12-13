@@ -1,5 +1,21 @@
 # -*- coding: utf-8 -*-
 
+""" 
+################################
+# Execution en tant que script 
+#
+# taper python Combinaison.py
+#
+# dans un terminal
+################################
+
+
+Chaimae Fillah
+Ines Dobosz 
+
+
+"""
+
 from numpy import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -16,16 +32,6 @@ import Perceptr as perceptr
 import KNN as knn
 import SVM as svm
 
-
-""" 
-################################
-# Execution en tant que script 
-#
-# taper python Combinaison.py
-#
-# dans un terminal
-################################
-"""
 
 
 class Combinaison : 
@@ -102,11 +108,11 @@ class Combinaison :
             occurence_class = np.zeros(self.etiquette_classe)
 
             #La classe prédite pour chaque classifieur est ajoutée au tableau
-            occurence_class[predictionNB[i]]+=1
-            occurence_class[predictionTree[i]]+=1
-            occurence_class[int(predictionKNN[i])]+=1
-            occurence_class[predictionPerceptr[i]]+=1
-            occurence_class[predictionSVM[i]]+=1
+            occurence_class[predictionNB[i]] += 1
+            occurence_class[predictionTree[i]] += 1
+            occurence_class[int(predictionKNN[i])] += 1
+            occurence_class[predictionPerceptr[i]] += 1
+            occurence_class[predictionSVM[i]] += 1
 
             #La classe la plus redondante est prédite
             etiquetteFinale[i] = argmax(occurence_class)
@@ -146,11 +152,11 @@ class Combinaison :
             occurence_class = np.zeros(self.etiquette_classe)
 
             #La classe prédite pour chaque classifieur est ajoutée au tableau
-            occurence_class[predictionNB[i]]+=1
-            occurence_class[predictionTree[i]]+=1
-            occurence_class[int(predictionKNN[i])]+=1
-            occurence_class[predictionPerceptr[i]]+=1
-            occurence_class[predictionSVM[i]]+=1
+            occurence_class[predictionNB[i]] += 1
+            occurence_class[predictionTree[i]] += 1
+            occurence_class[int(predictionKNN[i])] += 1
+            occurence_class[predictionPerceptr[i]] += 1
+            occurence_class[predictionSVM[i]] += 1
 
             #La classe la plus redondante est prédite
             etiquetteFinale[i] = argmax(occurence_class)

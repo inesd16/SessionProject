@@ -1,3 +1,19 @@
+
+"""  
+
+################################
+# Execution en tant que script 
+#
+# taper python DecisionTree.py
+#
+# dans un terminal
+################################
+
+Chaimae Fillah
+Ines Dobosz
+
+"""
+
 from numpy import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,16 +25,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import cross_val_score
 
 
-"""  
-
-################################
-# Execution en tant que script 
-#
-# taper python DecisionTree.py
-#
-# dans un terminal
-################################
-"""
 class DecisionTree:
     
     def __init__(self):
@@ -38,7 +44,7 @@ class DecisionTree:
                      X_train, y_train, depth = None, 
                      splitter = 'best', criterion = 'gini', clf = None):
         #Déclaration de l'arbre de décision
-        clf = DecisionTreeClassifier(max_depth = depth, splitter = splitter,criterion=criterion).fit(X_train, y_train) 
+        clf = DecisionTreeClassifier(max_depth=depth, splitter=splitter,criterion=criterion).fit(X_train, y_train) 
         #Entrainement de l'abre de décision 
         clf.fit(X_train, y_train)
         return clf
@@ -46,9 +52,9 @@ class DecisionTree:
 
     #Prédiction avec le classifieur particulier
     def prediction(self, X_test, clf):
-        
         predictions = clf.predict(X_test) 
         return predictions
+
 
 
     def recherche_param(self, X_train, 
@@ -102,8 +108,8 @@ class DecisionTree:
               ",\nune criterion = ",c,
               ",\net un splitter = ",s)
         #On retourne le classifieur avec les meilleurs parametres
-        clf = DecisionTreeClassifier(max_depth = acc_index + self.depth_begin, 
-                                     splitter = s,criterion=c)
+        clf = DecisionTreeClassifier(max_depth=acc_index + self.depth_begin, 
+                                     splitter=s,criterion=c)
         
         return clf, historiqueTot
 
@@ -119,6 +125,8 @@ class DecisionTree:
         meanScoreCV = np.sum(scoreCV/len(scoreCV))
         print("La validation croisée affiche une prédiction moyenne de %.2f" %(meanScoreCV))
 
+
+
     #Affichage des précisions en fonction des différents paramètres
     def affichageParam(self,historiqueTot):
         #Définir une couleur pour chaque jeu de paramètres
@@ -129,14 +137,14 @@ class DecisionTree:
             x=int(a/4)
             if (p[1]==1):
                 if (p[2] == 1):
-                    plt.scatter(x, p[0], c=color[0], label = 'criterion : entropy ; splitter : best') 
+                    plt.scatter(x, p[0], c=color[0], label='criterion : entropy ; splitter : best') 
                 else:
-                    plt.scatter(x, p[0], c=color[1], label = 'criterion : entropy ; splitter : random') 
+                    plt.scatter(x, p[0], c=color[1], label='criterion : entropy ; splitter : random') 
             if (p[1]==0):
                 if (p[2] == 1):
-                    plt.scatter(x, p[0], c=color[2], label = 'criterion : gini ; splitter : best') 
+                    plt.scatter(x, p[0], c=color[2], label='criterion : gini ; splitter : best') 
                 else:
-                    plt.scatter(x, p[0], c=color[3], label = 'criterion : entropy ; splitter : random') 
+                    plt.scatter(x, p[0], c=color[3], label='criterion : entropy ; splitter : random') 
             a+=1
         print("La couleur bleue correspond à criterion : entropy ; splitter : best\
                 \nLa couleur noire correspond à criterion : entropy ; splitter : random\

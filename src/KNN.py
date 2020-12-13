@@ -1,4 +1,20 @@
 # -*- coding: utf-8 -*-
+"""  
+
+################################
+# Execution en tant que script 
+#
+# taper python KNN.py 1 0
+#
+# dans un terminal
+################################
+python KNN.py 1 0
+
+Chaimae Fillah
+Ines Dobosz
+
+"""
+
 from numpy import *
 import gestion_donnees as gd
 import numpy as np
@@ -16,18 +32,6 @@ warnings.warn = warn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
 
-"""  
-
-################################
-# Execution en tant que script 
-#
-# taper python KNN.py 1 0
-#
-# dans un terminal
-################################
-python KNN.py 1 0
-
-"""
 
 class KNN : 
     etiquette_classe = 99
@@ -55,7 +59,6 @@ class KNN :
             for imTrain in X_train: #pour tous les train de chaque test
                 diff = imTest-imTrain
                 distances[index] = np.linalg.norm(diff[0:63]) + np.linalg.norm(diff[64:127]) + np.linalg.norm(diff[128:191])
-                #distances[index] = np.linalg.norm(diff)
                 index+=1
             distances=distances/3
             sorted_list = np.argsort(distances) #trier par index des distances les plus petites
@@ -63,14 +66,13 @@ class KNN :
             for j in range(0,k):
                 resultat[y_train[voisinsProches[j]]] += 1
             result = np.argmax(resultat)
-            #print("Prédiction : ", result, ", étiquette : ", y_test[i])
             if result==y_test[i]:
-                score+=1
-            i+=1
+                score += 1
+            i += 1
         print("Réussite: {}%".format(score/i*100))
 
     #Prédiction des k plus proches voisins en comparant les trois features (Margin, Shape, Texture)
-    def predictByFeaturesKN(self, X_train, y_train, X_test, k, y_test = []):
+    def predictByFeaturesKN(self, X_train, y_train, X_test, k, y_test=[]):
 
         predictionsTot = np.zeros(len(X_test))
         distances = np.zeros(X_train.shape[0])
@@ -86,7 +88,7 @@ class KNN :
                 diff = imTest-imTrain
                 # moyenne de chaque feature
                 distances[index] = np.linalg.norm(diff[0:63]) + np.linalg.norm(diff[64:127]) + np.linalg.norm(diff[128:191])
-                index+=1
+                index += 1
             distances=distances/3
             sorted_list = np.argsort(distances) #trié par index des distances les plus petites
             voisinsProches = sorted_list #  distance la plus petite
@@ -95,20 +97,20 @@ class KNN :
             #Tant que l'on n'a pas k voisins appartenant à la même classe
             while np.max(resultat)<k :
                 resultat[y_train[sorted_list[j]]] += 1
-                j+=1
+                j += 1
             result = np.argmax(resultat)
             predictionsTot[i] = result
 
             #Prédiction pour des donnees sansp cible (donnees de test)
             if (y_test == []):
                 print("Prédiction : ", result)
-                i+=1
+                i += 1
 
             #Prediction pour des donnees avec cible
             else :
                 if result==y_test[i]:
-                    score+=1
-                i+=1
+                    score += 1
+                i += 1
             #Précision totale
             scoreTot = score/i*100
         print("Réussite: {}%\n".format(score/i*100))
@@ -146,7 +148,7 @@ class KNN :
         for t in test:
             points[i+len(X_train)] = self.moyenneFeatures(t)
             c = colors[int(predictionTest[i])]      #différente couleur pour chaque etiquette de classe
-            plt.scatter(points[i, 0], points[i, 1], points[i, 2], c=c, marker = '_')
+            plt.scatter(points[i, 0], points[i, 1], points[i, 2], c=c, marker='_')
             i = i+1
 
         plt.title('Margin Shape Texture')
@@ -168,7 +170,7 @@ class KNN :
         i=0
         meanScoreCV = 0
         for train_index, test_index in sss.split(train, labels): #pour chaque sous partie, on divise avec sss
-            i+=1
+            i += 1
             print("Itération ",i)
             X_train, X_test = train.values[train_index], train.values[test_index]
             y_train, y_test = labels[train_index], labels[test_index]

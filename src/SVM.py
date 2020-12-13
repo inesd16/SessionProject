@@ -1,3 +1,18 @@
+
+"""  
+
+################################
+# Execution en tant que script 
+#
+# taper python SVM.py
+#
+# dans un terminal
+################################
+
+Chaimae Fillah
+Ines Dobosz
+
+"""
 from sklearn.svm import SVC
 from numpy import *
 import numpy as np
@@ -17,16 +32,6 @@ warnings.warn = warn
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import StratifiedShuffleSplit
 
-"""  
-
-################################
-# Execution en tant que script 
-#
-# taper python SVM.py
-#
-# dans un terminal
-################################
-"""
 
 #Ce code a été pris sur le Kaggle, https://www.kaggle.com/udaysa/svm-with-scikit-learn-svm-with-parameter-tuning
 #
@@ -89,7 +94,7 @@ class SVM :
         meanScoreCV = 0
         for train_index, test_index in sss.split(train, labels): #pour chaque sous partie, on divise avec sss
             print("Itération ",i)
-            i+=1
+            i += 1
             #print(" Index TRAIN:", train_index, "Index TEST:", test_index) #index des valeurs sélectionnées
             X_train, X_test = train.values[train_index], train.values[test_index]
             y_train, y_test = labels[train_index], labels[test_index]

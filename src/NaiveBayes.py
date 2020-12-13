@@ -1,11 +1,5 @@
-from numpy import *
-import numpy as np
-import gestion_donnees as gd
-from sklearn.naive_bayes import BernoulliNB, GaussianNB
-from sklearn.model_selection import train_test_split, cross_val_score
 
-
-
+"""
 ################################
 # Execution en tant que script 
 #
@@ -13,6 +7,18 @@ from sklearn.model_selection import train_test_split, cross_val_score
 #
 # dans un terminal
 ################################
+
+Chaimae Fillah
+Ines Dobosz
+
+"""
+
+from numpy import *
+import numpy as np
+import gestion_donnees as gd
+from sklearn.naive_bayes import BernoulliNB, GaussianNB
+from sklearn.model_selection import train_test_split, cross_val_score
+
 
 
 class NaiveBayes:
