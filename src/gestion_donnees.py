@@ -8,28 +8,13 @@ import numpy as np
 
 
 class GestionDonnees:
-    def __init__(self, nb_train, nb_test, lineairement_sep):
-        self.nb_train = nb_train
-        self.nb_test = nb_test
-        self.lineairement_sep = lineairement_sep
-
-    def donnees_aleatoires(self, nb_data):
-        """
-        Fonction qui génère des données 2D aléatoires
-        nb_data : nb de donnees générées
-        """
-        if self.lineairement_sep:
-            nb_data_1_2 = int(nb_data / 2.0)
-        else:
-            nb_data_1_2 = int(nb_data / 3.0)
-            nb_data_2 = nb_data - int(2.0 * nb_data / 3.0)
-
-        x_1 = np.random.randn(nb_data_1_2, 2) + np.array([[5, 1]])  # Gaussienne centrée en mu_1_1=[5,1]
-        t_1 = np.ones(nb_data_1_2)
-        x_2 = np.random.randn(nb_data_1_2, 2) + np.array([[2, 3]])  # Gaussienne centrée en mu_2=[2,3]
-        t_2 = np.zeros(nb_data_1_2)
-        x = np.vstack([x_1, x_2])
-        t = np.hstack([t_1, t_2])
+    def __init__(self):
+        self.nb_train = 0
+        self.nb_test = 0
+        self.nb_split = 1
+        self.test_size = 0.2
+        self.train_add = '../leaf-classification/train.csv'
+        self.test_add = '../leaf-classification/test.csv'
 
 
         if not self.lineairement_sep:
