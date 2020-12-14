@@ -71,7 +71,7 @@ class DecisionTree:
         #Regarder les précisions
         d=0
         for depth in range(self.depth_begin,self.depth_size):
-            print("\nMax depth = ", depth)
+            print("Max depth = ", depth)
             i=0
             for criterion in self.criterions:
                 j=0

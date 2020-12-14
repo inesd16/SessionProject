@@ -9,17 +9,14 @@
 # dans un terminal
 ################################
 
-
 Chaimae Fillah
 Ines Dobosz 
-
 
 """
 
 from numpy import *
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn import datasets 
 from sklearn.metrics import accuracy_score
 from random import randint
 import gestion_donnees as gd
@@ -44,7 +41,7 @@ class Combinaison :
 
     def choix_classifieurs(self, X_train, y_train, X_test, y_test):
 
-        print(" \t\t--- Recherche des meilleurs classifieurs pour chaque méthode ---\n\n")
+        print(" \n\t\t--- Recherche des meilleurs classifieurs pour chaque méthode ---\n\n")
 
         #Choix des classifieurs
 
@@ -81,6 +78,8 @@ class Combinaison :
 
     
     def predictionsTest(self, X_train, y_train, X_test, y_test, test, train, labels):
+
+        print("--Prédictions Test--")
         #Entrainement avec l'entiereté des données d'entrainement
         #Test sur les donnée de test
         #On récupère les différents classifieurs optimisés par leurs hyperparamètres
@@ -121,6 +120,8 @@ class Combinaison :
 
     def predictionsValidation(self, X_train, y_train, X_test, y_test):
         
+        print("--Prédiction Validation--")
+
         #On récupère les différents classifieurs optimisés par leurs hyperparamètres
         clfNB, clfTree, kNN, clfPerceptr, clfSVM = self.clfNB, self.clfTree, self.kNN, self.clfPerceptr, self.clfSVM
 
@@ -132,10 +133,16 @@ class Combinaison :
         clfSVM.fit(X_train, y_train)
 
         #Prédiction pour chaque classifieur, pour les données de validation
+        
+        print("\n # Prédiction Naive Bayes # \n")
         predictionNB = clfNB.predict(X_test)
+        print(" # Prédiction Arbre de décision # \n")
         predictionTree = clfTree.predict(X_test)
+        print(" # Prédiction KNN # \n")
         predictionKNN,_ = kNN.predictByFeaturesKN(X_train, y_train, X_test, 1, y_test)
+        print("\n # Prédiction Perceptron # \n")
         predictionPerceptr = clfPerceptr.predict(X_test)
+        print("\n # Prédiction SVM # \n")
         predictionSVM = clfSVM.predict(X_test)
         print("Voici les prédiction de chaque modèle, dans l'ordre, NaiveBayes, Arbre de Decision, K plus proches voisins, Perceptron, SVM : \n")
         print(predictionNB)
@@ -163,7 +170,7 @@ class Combinaison :
 
         acc = accuracy_score(etiquetteFinale, y_test)
         print(etiquetteFinale)
-        print("Accuracy finale de combinaison des modeles : ",acc*100,"%")
+        print("\n\nAccuracy finale de combinaison des modeles : ",acc*100,"%")
 
 
 def main():

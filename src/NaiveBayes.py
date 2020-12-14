@@ -1,5 +1,6 @@
 
 """
+
 ################################
 # Execution en tant que script 
 #
@@ -36,8 +37,8 @@ class NaiveBayes:
             accuracy_array[i] = classifieur.score(X_test, y_test)
             i+=1
 
-        print("array : ",accuracy_array)
-        print("La meilleure précision est precision : ", max(accuracy_array), ",\nPour un paramètre alpha qui vaut : ",self.alpha[argmax(accuracy_array)], "\n")
+        print("\n\nTableau des scores pour chaque paramètre : ",accuracy_array, "\n")
+        print("La meilleure précision est : ", max(accuracy_array), ",\nPour un paramètre alpha qui vaut : ",self.alpha[argmax(accuracy_array)], "\n")
 
         return BernoulliNB(alpha = self.alpha[argmax(accuracy_array)])
 

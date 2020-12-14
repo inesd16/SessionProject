@@ -57,7 +57,7 @@ class KNN :
             resultat = np.zeros(self.etiquette_classe)
             sorted_list = np.zeros(self.nb_train)
             for imTrain in X_train: #pour tous les train de chaque test
-                diff = imTest-imTrain
+                diff = imTest - imTrain
                 distances[index] = np.linalg.norm(diff[0:63]) + np.linalg.norm(diff[64:127]) + np.linalg.norm(diff[128:191])
                 index+=1
             distances=distances/3
@@ -103,7 +103,6 @@ class KNN :
 
             #Prédiction pour des donnees sansp cible (donnees de test)
             if (y_test == []):
-                print("Prédiction : ", result)
                 i += 1
 
             #Prediction pour des donnees avec cible
@@ -113,8 +112,8 @@ class KNN :
                 i += 1
             #Précision totale
             scoreTot = score/i*100
-        print("Réussite: {}%\n".format(score/i*100))
-    
+        if (score/i*100 != float(0)):
+            print("Réussite: {}%\n".format(score/i*100))
     
         return predictionsTot, scoreTot
 
@@ -125,6 +124,8 @@ class KNN :
         colors = []
         #On récupere les predictions
         predictionTest,_ = self.predictByFeaturesKN(X_train, y_train, test, 1, y_test)
+        if (y_test == []):
+            print(" Prédiction sur les données de test : ",predictionTest)
         plt.figure(figsize=(30,30))
         #Affichage des points en 3D
         plt.axes(projection="3d")
@@ -164,7 +165,7 @@ class KNN :
         return data
 
     def validation_croisee(self, train, labels):
-        print(" --- Validation croisee --- ")
+        print("\n --- Validation croisee --- \n")
         #Création de plusieurs divisons de l'ensemble des donnees
         sss = StratifiedShuffleSplit(n_splits=10, test_size=0.2, random_state=23) #n_spilt divisions, 0.2 = test 0.8 = train
         i=0
@@ -184,9 +185,10 @@ class KNN :
     def prediction_all_k(self, X_train, y_train, X_test, y_test):
         
 
-        print(" -- Prédiction pour tous les k ---")
+        print(" -- Prédiction pour tous les k ---\n")
         print("Méthode des k plus proches voisins appartenant à la même classe")
-        print("La classe prédite est celle qui correspond à la classe qu'on retrouve k fois, parmi les plus proches voisins")
+        print("Avec échantillon de donnees de VALIDATION")
+        print("La classe prédite est celle qui correspond à la classe qu'on retrouve k fois, parmi les plus proches voisins\n")
         result = np.zeros(8)
         for k in range(1,9):
             print("Prédiction pour k = ",k)
@@ -209,6 +211,7 @@ def main():
         print(usage)
         return
     k = sys.argv[1]
+    choixTest = int(sys.argv[2])
 
     #Creation de l'objet
     knn = KNN()
@@ -222,20 +225,21 @@ def main():
     knn.test = len(test)
 
     #Validation croisee
-    knn.validation_croisee(train, labels)
+    #knn.validation_croisee(train, labels)
 
     #Prédiction pour tous les k
-    knn.prediction_all_k(X_train, y_train, X_test, y_test)
+    #knn.prediction_all_k(X_train, y_train, X_test, y_test)
 
     
     #Donnees de test, sans cible
-    if sys.argv[2] == 1:
+    if (choixTest == 1):
         print("-- Prédicitions des données de test avec affichage --")
-        knn.affichage(train, labels, test, k)
+        knn.affichage(X_train, y_train, test, k)
+
 
     #Donnees de validation
-    else:
-        print("-- Prédicitions des données de validation avec affichage --")
+    else :
+        print("\n-- Prédicitions des données de validation avec affichage --\n")
         knn.affichage(X_train, y_train, X_test, k, y_test)
 
 

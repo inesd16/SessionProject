@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
+
 ###############################
 # Execution en tant que script 
 #
@@ -90,7 +91,9 @@ class Perceptr:
         lambdindex=int(h/len(lambdas)) # Lamb correspondant à une précision max
         learnindex=h%(len(learn_rates)) # LR correspondant à une précision max
 
-        print("Les meilleurs hyperparamètres choisis sont lambas = ",lambdas[lambdindex]," et learning rate = ", learn_rates[learnindex],"\n")
+        print("Les meilleurs hyperparamètres choisis sont lambas = ",lambdas[lambdindex],
+              " et learning rate = ", learn_rates[learnindex],
+              "\nAvec une accuracy = ",historique[lambdindex][learnindex])
       
         # Affichage 
         self.affichage(historique, [lambdas[lambdindex], learn_rates[learnindex]]) 
