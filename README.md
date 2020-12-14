@@ -15,4 +15,5 @@ Par exemple:
 
 ```
 python KNN.py 1 0
+
 ```
