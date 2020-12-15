@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-
-#####
-# VotreNom (VotreMatricule) .~= À MODIFIER =~.
-###
 
 import numpy as np
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import StratifiedShuffleSplit
 
 
 class GestionDonnees:
@@ -17,28 +15,38 @@ class GestionDonnees:
         self.test_add = '../leaf-classification/test.csv'
 
 
-        if not self.lineairement_sep:
-            x_2 = np.random.randn(nb_data_2, 2) + np.array([[0, 4]])  # Gaussienne centrée en mu_1_1=[0,4]
-            t_2 = np.ones(x_2.shape[0])
+    def recupDonnees(self):
+        #Récupération des donnees d'entrainement et de test à partir des fichiers csv
+        train = pd.read_csv(self.train_add) #on récupère  les données d'entrainment (990)
+        test = pd.read_csv(self.test_add) #on récupère  les données d'entrainment (594)
+        train, labels, test, test_ids, classes = self.encode(train, test)
+        train.head(1)
 
-            # Fusionne toutes les données dans un seul ensemble
-            x = np.vstack([x, x_2])
-            t = np.hstack([t, t_2])
+        final_test = np.zeros((len(test),64*3))
+        sss = StratifiedShuffleSplit(n_splits=self.nb_split, test_size=self.test_size, random_state=1) #n_split divisions, 0.2 = test 0.8 = train
+        
+        #Valeur de test (sans étiquette de classe)
+        for i in range(0,len(test)):
+            final_test[i] = test.values[i]
 
-        # Mélange aléatoire des données
-        p = np.random.permutation(len(t))
-        x = x[p, :]
-        t = t[p]
+        i=0
+        #Mélange aléatoire
+        for train_index, test_index in sss.split(train, labels): #pour chaque sous partie, on divise avec sss
 
-        return x, t
-
-    def generer_donnees(self):
-        """
-        Fonction qui genere des donnees de test et d'entrainement.
-        nb_train : nb de donnees d'entrainement
-        nb_test : nb de donnees de test
-        """
-        x_train, t_train = self.donnees_aleatoires(self.nb_train)
-        x_test, t_test = self.donnees_aleatoires(self.nb_test)
-
-        return x_train, t_train, x_test, t_test
+            X_train, X_test = train.values[train_index], train.values[test_index]
+            y_train, y_test = labels[train_index], labels[test_index]
+        
+        self.nb_train = len(X_train)
+        self.nb_test = len(X_test)
+        self.test = len(final_test)
+        return (X_train, y_train, X_test, y_test, final_test, train, labels)
+    
+    def encode(self, train, test):
+        le = LabelEncoder().fit(train.species) 
+        labels = le.transform(train.species)           # encode les especes 
+        classes = list(le.classes_)                    # save column names for submission
+        test_ids = test.id                             # save test ids for submission
+        train = train.drop(['species', 'id'], axis=1)  
+        test = test.drop(['id'], axis=1)
+    
+        return train, labels, test, test_ids, classes
